@@ -11,6 +11,9 @@ script_dir=$(cd $(dirname $0) || exit 1; pwd)
 source "${script_dir}/manylinux-build-common.sh"
 # -----------------------------------------------------------------------
 
+# VTK requirements
+gosu root yum install -y libXt-devel mesa-libGL-devel
+
 # Build standalone project and populate archive cache
 mkdir -p /work/standalone-${ARCH}-build
 pushd /work/standalone-${ARCH}-build > /dev/null 2>&1
