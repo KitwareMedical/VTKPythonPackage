@@ -159,6 +159,13 @@ if(VTKPythonPackage_SUPERBUILD)
 
   set(install_dir "vtk")
 
+  # Platform specific options
+  if(UNIX AND NOT APPLE)
+    list(APPEND ep_common_cmake_cache_args
+      -DCMAKE_INSTALL_RPATH:STRING=$ORIGIN
+      )
+  endif()
+
   ExternalProject_add(VTK
     DOWNLOAD_COMMAND ""
     SOURCE_DIR ${VTK_SOURCE_DIR}
