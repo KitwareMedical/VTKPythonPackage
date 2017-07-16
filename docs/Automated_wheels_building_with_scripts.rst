@@ -32,7 +32,33 @@ MacOSX
 Windows
 -------
 
-.. note:: *Not yet available.*
+First, install Microsoft Visual C++ Compiler for Python 2.7, Visual Studio 2015, Git, and CMake, which should be added to the system PATH environmental variable.
+
+Open a PowerShell terminal as Administrator, and install Python::
+
+	PS C:\> Set-ExecutionPolicy Unrestricted
+	PS C:\> iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/scikit-build/scikit-ci-addons/master/windows/install-python.ps1'))
+
+In a PowerShell prompt::
+
+	PS C:\Windows> cd C:\
+	PS C:\> git clone https://github.com/jcfr/VTKPythonPackage.git VPP
+	PS C:\> cd VPP
+	PS C:\VPP> C:\Python27-x64\python.exe .\scripts\windows_build_wheels.py
+	[...]
+
+	PS C:\VPP> ls dist
+	    Directory: C:\VPP\dist
+
+
+	    Mode                LastWriteTime         Length Name
+	    ----                -------------         ------ ----
+	    -a----        7/16/2017   5:21 PM       ???????? vtk-8.0.0.dev20170714-cp27-cp27m-win_amd64.whl
+	    -a----        7/16/2017  11:14 PM       ???????? vtk-8.0.0.dev20170714-cp35-cp35m-win_amd64.whl
+	    -a----        7/16/2017   2:08 AM       ???????? vtk-8.0.0.dev20170714-cp36-cp36m-win_amd64.whl
+
+We need to work in a short directory to avoid path length limitations on Windows, so the repository is cloned into C:\VPP. Also, it is very important to disable antivirus checking on the C:\VPP directory. Otherwise, the build system conflicts with the antivirus when many files are created and deleted quickly, which can result in Access Denied errors. Windows 10 ships with an antivirus application, Windows Defender, that is enabled by default.
+
 
 sdist
 -----
