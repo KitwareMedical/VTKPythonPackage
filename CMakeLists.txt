@@ -188,6 +188,8 @@ if(VTKPythonPackage_SUPERBUILD)
       -DVTK_INSTALL_RUNTIME_DIR:PATH=${install_dir}
       -DVTK_INSTALL_LIBRARY_DIR:PATH=${install_dir}
       -DVTK_INSTALL_ARCHIVE_DIR:PATH=${install_dir}
+      -DVTK_INSTALL_NO_DEVELOPMENT:BOOL=ON
+
       # Rendering options
       -DVTK_Group_Qt:BOOL=OFF  # XXX Enabled this later
       -DVTK_RENDERING_BACKEND:STRING=OpenGL2
