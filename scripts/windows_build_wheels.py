@@ -145,7 +145,7 @@ def build_wheels(py_envs=DEFAULT_PY_ENVS, single_wheel=False,
 
 
 def main(py_envs=DEFAULT_PY_ENVS, wheel_names=None, cleanup=True):
-    single_wheel = False
+    single_wheel = True
 
     build_wheels(
         single_wheel=single_wheel, cleanup=cleanup,
