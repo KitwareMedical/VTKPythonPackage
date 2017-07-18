@@ -1,4 +1,4 @@
-VERSION = '8.0.0.dev20170714+404.gfb181d5'
+VERSION = '8.0.0.dev20170717+413.g2a775bf'
 
 def get_versions():
     """Returns versions for the VTK Python package.
