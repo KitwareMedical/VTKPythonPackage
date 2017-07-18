@@ -122,7 +122,7 @@ def build_wheels(py_envs=DEFAULT_PY_ENVS, single_wheel=False,
     with push_dir(directory=STANDALONE_DIR, make_directory=True):
 
         cmake_executable = "cmake.exe"
-        tools_venv = os.path.join(ROOT_DIR, "venv-27-x64")
+        tools_venv = os.path.join(ROOT_DIR, "venv-%s" % DEFAULT_PY_ENVS[0])
         pip_install(tools_venv, "ninja")
         ninja_executable = os.path.join(tools_venv, "Scripts", "ninja.exe")
 
