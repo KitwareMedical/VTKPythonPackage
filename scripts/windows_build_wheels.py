@@ -64,7 +64,6 @@ def build_wheel(python_version, single_wheel=False,
         build_type = "Release"
         source_path = "%s/%s-source" % (STANDALONE_DIR, PROJECT_NAME)
         build_path = "%s/%s-win_%s" % (ROOT_DIR, PROJECT_NAME, python_version)
-        setup_py_configure = os.path.join(SCRIPT_DIR, "setup_py_configure.py")
 
         # Clean up previous invocations
         if cleanup and os.path.exists(build_path):
@@ -75,9 +74,6 @@ def build_wheel(python_version, single_wheel=False,
         print("#")
         print("# Build single %s wheel" % PROJECT_NAME)
         print("#")
-
-        # Configure setup.py
-        check_call([python_executable, setup_py_configure, "itk"])
 
         # Generate wheel
         check_call([
@@ -120,9 +116,8 @@ def test_wheels(single_wheel=False):
 def build_wheels(py_envs=DEFAULT_PY_ENVS, single_wheel=False,
                  cleanup=False, wheel_names=None):
 
-    prepare_build_env("27-x64")
-    prepare_build_env("35-x64")
-    prepare_build_env("36-x64")
+    for py_env in py_envs:
+        prepare_build_env(py_env)
 
     with push_dir(directory=STANDALONE_DIR, make_directory=True):
 

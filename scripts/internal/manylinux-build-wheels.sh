@@ -42,7 +42,6 @@ for PYBIN in "${PYBINARIES[@]}"; do
     build_type=MinSizeRel
     source_path=/work/standalone-${ARCH}-build/VTK-source
     build_path=/work/VTK-$(basename $(dirname ${PYBIN}))-manylinux1_${ARCH}
-    SETUP_PY_CONFIGURE="${script_dir}/../setup_py_configure.py"
 
     # Clean up previous invocations
     rm -rf ${build_path}
