@@ -46,3 +46,7 @@ before_install:
     fi
   - export CCACHE_COMPRESS=1
   - python --version # just to check
+
+install:
+  - pip install --upgrade pip setuptools wheel
+  - pip install -r requirements-dev.txt
