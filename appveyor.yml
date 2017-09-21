@@ -1,0 +1,83 @@
+# As config was originally based on an example by Olivier Grisel. Thanks!
+# https://github.com/ogrisel/python-appveyor-demo/blob/master/appveyor.yml
+clone_depth: 50
+
+image:
+  - Visual Studio 2017
+
+# No reason for us to restrict the number concurrent jobs
+max_jobs: 100
+
+cache:
+  - '%LOCALAPPDATA%\pip\Cache'
+  - '%USERPROFILE%\clcache'
+
+environment:
+  global:
+      APPVEYOR_SAVE_CACHE_ON_ERROR: true
+      APPVEYOR_SKIP_FINALIZE_ON_EXIT: true
+
+  matrix:
+    - PYTHON: C:\Python36-x64
+      PYTHON_VERSION: 3.6
+      PYTHON_ARCH: 64
+
+    - PYTHON: C:\Python36
+      PYTHON_VERSION: 3.6
+      PYTHON_ARCH: 32
+
+    - PYTHON: C:\Python35-x64
+      PYTHON_VERSION: 3.5
+      PYTHON_ARCH: 64
+
+    - PYTHON: C:\Python35
+      PYTHON_VERSION: 3.5
+      PYTHON_ARCH: 32
+
+init:
+  - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
+  - "ECHO \"%APPVEYOR_SCHEDULED_BUILD%\""
+
+install:
+  # Prepend newly installed Python to the PATH of this build (this cannot be
+  # done from inside the powershell script as it would require to restart
+  # the parent CMD process).
+  - SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
+
+  - C:\cygwin\bin\du -hs "%LOCALAPPDATA%\pip\Cache"
+  # Upgrade to the latest pip.
+  - 'python -m pip install -U pip setuptools wheel'
+
+  # Install the scipy test dependencies.
+  - 'pip install -U --timeout 5 --retries 2 -r requirements-dev.txt'
+  - 'pip install git+https://github.com/frerich/clcache.git'
+  - 'pip install git+https://github.com/xoviat/command-timeout.git'
+
+build_script:
+  - set CC=clcache
+  - set CXX=clcache
+  - command-timeout 2400 python setup.py bdist_wheel
+
+after_build:
+  # Remove old or huge cache files to hopefully not exceed the 1GB cache limit.
+  #
+  # If the cache limit is reached, the cache will not be updated (of not even
+  # created in the first run). So this is a trade of between keeping the cache
+  # current and having a cache at all.
+  # NB: This is done only `on_success` since the cache in uploaded only on
+  # success anyway.
+  - C:\cygwin\bin\find "%LOCALAPPDATA%\pip" -type f -mtime +360 -delete
+  - C:\cygwin\bin\find "%LOCALAPPDATA%\pip" -type f -size +10M -delete
+  - C:\cygwin\bin\find "%LOCALAPPDATA%\pip" -empty -delete
+  # Show size of cache
+  - C:\cygwin\bin\du -hs "%LOCALAPPDATA%\pip\Cache"
+
+on_finish:
+  - ps: |
+      If (Test-Path .\junit-results.xml) {
+        (new-object net.webclient).UploadFile(
+          "https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)",
+          (Resolve-Path .\junit-results.xml)
+        )
+      }
+      $LastExitCode = 0
