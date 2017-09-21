@@ -50,3 +50,6 @@ before_install:
 install:
   - pip install --upgrade pip setuptools wheel
   - pip install -r requirements-dev.txt
+
+script:
+  - pip wheel -v -v -v --wheel-dir=dist .
