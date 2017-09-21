@@ -8,6 +8,7 @@ addons:
   apt:
     packages:
     - ccache
+    - cmake
 cache:
   directories:
     - $HOME/.ccache
