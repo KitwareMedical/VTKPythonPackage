@@ -3,3 +3,46 @@ language: python
 matrix:
   include:
     - python: 3.6
+
+addons:
+  apt:
+    packages:
+    - ccache
+cache:
+  directories:
+    - $HOME/.ccache
+
+before_install:
+  # Work in our own virtualenv to isolate from travis-ci packages.
+  - echo $TRAVIS_OS_NAME
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      python -m pip install --upgrade pip
+      pip install --upgrade virtualenv
+      virtualenv --python=python venv
+      source venv/bin/activate
+      export PATH=/usr/lib/ccache:$PATH
+      free -m
+    elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      brew install gcc ccache
+      touch config.sh
+      git clone https://github.com/matthew-brett/multibuild.git
+      source multibuild/common_utils.sh
+      source multibuild/travis_steps.sh
+      before_install
+      which ccache
+      ln -s ccache /usr/local/bin/gcc
+      ln -s ccache /usr/local/bin/g++
+      ln -s ccache /usr/local/bin/cc
+      ln -s ccache /usr/local/bin/c++
+      ln -s ccache /usr/local/bin/clang
+      ln -s ccache /usr/local/bin/clang++
+      export USE_CCACHE=1
+      export CCACHE_MAXSIZE=200M
+      export CCACHE_CPP2=1
+      export CFLAGS="-arch x86_64"
+      export CXXFLAGS="-arch x86_64"
+      printenv
+    fi
+  - export CCACHE_COMPRESS=1
+  - python --version # just to check
