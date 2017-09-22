@@ -59,4 +59,5 @@ install:
   - pip install -r requirements-dev.txt
 
 script:
+  - python setup.py build
   - pip wheel -v -v -v --wheel-dir=dist .
