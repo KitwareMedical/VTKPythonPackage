@@ -7,4 +7,4 @@ else
 fi
 
 docker pull $DOCKER_IMAGE
-docker run --rm -v ${HOME}/.ccache:/ccache -v `pwd`:/io $DOCKER_IMAGE -e TARGET_ARCH=$TARGET_ARCH /io/scripts/prepare-linux.sh
+docker run --rm -v ${HOME}/.ccache:/ccache -v `pwd`:/io -e TARGET_ARCH=$TARGET_ARCH $DOCKER_IMAGE /io/scripts/prepare-linux.sh

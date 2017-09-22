@@ -21,4 +21,4 @@ install: true
 script: 
   - chmod -R 777 scripts
   - function timeout() { perl -e 'alarm shift; exec @ARGV' "$@"; }
-  - timeout 2400 scripts/start.sh
+  - timeout 2400 /bin/bash scripts/start.sh
