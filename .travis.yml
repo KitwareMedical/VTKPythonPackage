@@ -12,4 +12,6 @@ cache:
     - $HOME/.ccache
 
 install: true
-script: scripts/start.sh
+script: 
+  - chmod -R 777 scripts
+  - scripts/start.sh
