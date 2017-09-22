@@ -66,6 +66,11 @@ init:
   - "ECHO \"%APPVEYOR_SCHEDULED_BUILD%\""
 
 install:
+  # Prepend newly installed Python to the PATH of this build (this cannot be
+  # done from inside the powershell script as it would require to restart
+  # the parent CMD process).
+  - SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
+
   - C:\cygwin\bin\du -hs "%LOCALAPPDATA%\pip\Cache"
   # Upgrade to the latest pip.
   - '%CMD_IN_ENV% python -m pip install -U pip setuptools wheel'
