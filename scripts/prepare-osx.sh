@@ -1,6 +1,6 @@
 brew install gcc ccache pyenv
 pyenv install $TRAVIS_PYTHON_VERSION
-pyenv local $TRAVIS_PYTHON_VERSION
+pyenv global $TRAVIS_PYTHON_VERSION
 
 # Activate the virtualenv
 python -m venv venv
