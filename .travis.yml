@@ -50,6 +50,8 @@ before_install:
       printenv
     fi
   - export CCACHE_COMPRESS=1
+  # Implement a platform-independent timeout function.
+  - function timeout() { perl -e 'alarm shift; exec @ARGV' "$@"; }
   - python --version # just to check
   - cmake --version
   - ccache -s
@@ -59,5 +61,5 @@ install:
   - pip install -r requirements-dev.txt
 
 script:
-  - python setup.py build
+  - timeout 2400 python setup.py build
   - pip wheel -v -v -v --wheel-dir=dist .
