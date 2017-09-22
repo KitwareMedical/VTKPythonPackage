@@ -1,79 +1,15 @@
-language: python
+sudo: required
 
 python:
-  - 2.7
   - 3.6
 
-# jobs:
-#   include:
-#    - stage: compile
-#      python: 3.6
-#      script:
-#        - rm -rf _skbuild || true
-#        - python setup.py build -- -DVTKPythonPackage_BUILD_PYTHON=OFF
-
-# stages:
-#  - compile
-#  - wrap
-
-addons:
-  apt:
-    packages:
-    - ccache
+os:
+  - linux
+  - osx
 
 cache:
   directories:
     - $HOME/.ccache
-    - $TRAVIS_BUILD_DIR/_skbuild
 
-before_install:
-  # Work in our own virtualenv to isolate from travis-ci packages.
-  - echo $TRAVIS_OS_NAME
-  - |
-    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      export PATH=/usr/lib/ccache:$PATH
-      free -m
-
-      # Install a newer CMake
-      DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
-      CMAKE_DIR="${DEPS_DIR}/cmake"
-      mkdir -p ${DEPS_DIR}
-      CMAKE_URL="https://cmake.org/files/v3.9/cmake-3.9.2-Linux-x86_64.tar.gz"
-      mkdir $CMAKE_DIR && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C $CMAKE_DIR
-      export PATH=$CMAKE_DIR/bin:$PATH
-      cmake --version
-    elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      brew install gcc ccache
-      touch config.sh
-      git clone https://github.com/matthew-brett/multibuild.git
-      source multibuild/common_utils.sh
-      source multibuild/travis_steps.sh
-      before_install
-      which ccache
-      ln -s ccache /usr/local/bin/gcc
-      ln -s ccache /usr/local/bin/g++
-      ln -s ccache /usr/local/bin/cc
-      ln -s ccache /usr/local/bin/c++
-      ln -s ccache /usr/local/bin/clang
-      ln -s ccache /usr/local/bin/clang++
-      export USE_CCACHE=1
-      export CCACHE_MAXSIZE=200M
-      export CCACHE_CPP2=1
-      export CFLAGS="-arch x86_64"
-      export CXXFLAGS="-arch x86_64"
-      printenv
-    fi
-  - export CCACHE_COMPRESS=1
-  # Implement a platform-independent timeout function.
-  - function timeout() { perl -e 'alarm shift; exec @ARGV' "$@"; }
-  - python --version # just to check
-  - cmake --version
-  - ccache -s
-
-install:
-  - pip install --upgrade pip setuptools wheel
-  - pip install -r requirements-dev.txt
-
-script:
-  - timeout 2400 python setup.py build
-  - pip wheel -v -v -v --wheel-dir=dist .
+install: true
+script: scripts/start.sh
