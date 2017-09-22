@@ -10,6 +10,7 @@ max_jobs: 100
 
 cache:
   - '%LOCALAPPDATA%\pip\Cache'
+  - '%HOME%\clcache'
 
 environment:
   global:
@@ -73,19 +74,16 @@ install:
 
   - C:\cygwin\bin\du -hs "%LOCALAPPDATA%\pip\Cache"
   # Upgrade to the latest pip.
-  - '%CMD_IN_ENV% python -m pip install -U pip setuptools wheel'
+  - 'python -m pip install -U pip setuptools wheel'
 
   # Install the scipy test dependencies.
-  - '%CMD_IN_ENV% pip install -U --timeout 5 --retries 2 -r requirements-dev.txt'
+  - 'pip install -U --timeout 5 --retries 2 -r requirements-dev.txt'
+  - 'pip install git+https://github.com/frerich/clcache.git'
 
 build_script:
-  - ps: |
-      mkdir dist
-      pip wheel -v -v -v --wheel-dir=dist .
-      ls dist -r | Foreach-Object {
-          appveyor PushArtifact $_.FullName
-          pip install $_.FullName
-      }
+  - set CC=clcache
+  - set CXX=clcache
+  - python setup.py bdist_wheel
 
 after_build:
   # Remove old or huge cache files to hopefully not exceed the 1GB cache limit.
