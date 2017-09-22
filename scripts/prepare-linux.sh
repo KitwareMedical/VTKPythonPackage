@@ -16,9 +16,10 @@ source venv/bin/activate
 
 # Install yum packages
 yum install -y ccache libXt-devel
+DEPS_DIR="$PWD/deps"
 
 # Use and verify ccache
-CCACHE_DIR=$PWD/deps/ccache
+CCACHE_DIR=$DEPS_DIR/ccache
 mkdir -p $CCACHE_DIR
 ln -s /usr/bin/ccache $CCACHE_DIR/gcc
 ln -s /usr/bin/ccache $CCACHE_DIR/g++
@@ -34,7 +35,6 @@ else
   CMAKE_URL="https://cmake.org/files/v3.5/cmake-3.5.2-Linux-i386.tar.gz"  
 fi
 
-DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
 CMAKE_DIR="${DEPS_DIR}/cmake"
 mkdir -p ${DEPS_DIR}
 mkdir $CMAKE_DIR && wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C $CMAKE_DIR
