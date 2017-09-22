@@ -1,11 +1,17 @@
 sudo: required
 
+language: python
 python:
+  - 2.7
   - 3.6
 
 os:
   - linux
   - osx
+
+env:
+  - TARGET_ARCH=x86
+  - TARGET_ARCH=x64
 
 cache:
   directories:
@@ -14,4 +20,5 @@ cache:
 install: true
 script: 
   - chmod -R 777 scripts
-  - scripts/start.sh
+  - function timeout() { perl -e 'alarm shift; exec @ARGV' "$@"; }
+  - timeout 2400 scripts/start.sh
