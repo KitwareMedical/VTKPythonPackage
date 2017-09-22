@@ -83,7 +83,7 @@ install:
 build_script:
   - set CC=clcache
   - set CXX=clcache
-  - python setup.py bdist_wheel
+  - C:\cygwin\bin\timeout 2400 python setup.py bdist_wheel
 
 after_build:
   # Remove old or huge cache files to hopefully not exceed the 1GB cache limit.
