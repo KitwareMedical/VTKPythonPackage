@@ -17,6 +17,16 @@ source venv/bin/activate
 # Install yum packages
 yum install -y ccache libXt-devel
 
+# Use and verify ccache
+CCACHE_DIR=$PWD/deps/ccache
+mkdir -p $CCACHE_DIR
+ln -s /usr/bin/ccache $CCACHE_DIR/gcc
+ln -s /usr/bin/ccache $CCACHE_DIR/g++
+ln -s /usr/bin/ccache $CCACHE_DIR/cc
+ln -s /usr/bin/ccache $CCACHE_DIR/c++
+export PATH=$CCACHE_DIR:$PATH
+which gcc
+
 # Install a newer CMake
 if [ $TARGET_ARCH == "x64" ]; then
   CMAKE_URL="https://cmake.org/files/v3.5/cmake-3.5.2-Linux-x86_64.tar.gz"  
