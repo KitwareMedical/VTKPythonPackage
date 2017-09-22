@@ -1,7 +1,11 @@
 #!/bin/bash
 set -e -x
 
-PYBIN=cp36-cp36m
+PYBIN_TAG=${TRAVIS_PYTHON_VERSION//[^[:digit:]]/}
+PYBIN=cp${PYBIN_TAG}-cp${PYBIN_TAG}m
+
+echo $PYBIN_TAG
+echo $PYBIN
 
 # Link ccache
 ln -s /ccache $HOME/.ccache
