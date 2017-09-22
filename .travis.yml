@@ -1,8 +1,20 @@
 language: python
 
-matrix:
+python:
+  - 2.7
+  - 3.6
+
+jobs:
   include:
-    - python: 3.6
+    - stage: compile
+      python: 3.6
+      script:
+        - rm -rf _skbuild || true
+        - python setup.py build -DVTKPythonPackage_BUILD_PYTHON=OFF
+
+stages:
+  - compile
+  - test
 
 addons:
   apt:
@@ -11,6 +23,7 @@ addons:
 cache:
   directories:
     - $HOME/.ccache
+    - $TRAVIS_BUILD_DIR/_skbuild
 
 before_install:
   # Work in our own virtualenv to isolate from travis-ci packages.
@@ -61,5 +74,6 @@ install:
   - pip install -r requirements-dev.txt
 
 script:
-  - timeout 2400 python setup.py build
+  - python setup.py build
   - pip wheel -v -v -v --wheel-dir=dist .
+  - rm -rf _skbuild
