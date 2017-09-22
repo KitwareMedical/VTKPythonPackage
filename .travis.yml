@@ -4,22 +4,23 @@ python:
   - 2.7
   - 3.6
 
-jobs:
-  include:
-    - stage: compile
-      python: 3.6
-      script:
-        - rm -rf _skbuild || true
-        - python setup.py build -DVTKPythonPackage_BUILD_PYTHON=OFF
+# jobs:
+#   include:
+#    - stage: compile
+#      python: 3.6
+#      script:
+#        - rm -rf _skbuild || true
+#        - python setup.py build -- -DVTKPythonPackage_BUILD_PYTHON=OFF
 
-stages:
-  - compile
-  - test
+# stages:
+#  - compile
+#  - wrap
 
 addons:
   apt:
     packages:
     - ccache
+
 cache:
   directories:
     - $HOME/.ccache
@@ -74,6 +75,5 @@ install:
   - pip install -r requirements-dev.txt
 
 script:
-  - python setup.py build
+  - timeout 2400 python setup.py build
   - pip wheel -v -v -v --wheel-dir=dist .
-  - rm -rf _skbuild
