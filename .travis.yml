@@ -8,7 +8,6 @@ addons:
   apt:
     packages:
     - ccache
-    - cmake
 cache:
   directories:
     - $HOME/.ccache
@@ -24,6 +23,15 @@ before_install:
       source venv/bin/activate
       export PATH=/usr/lib/ccache:$PATH
       free -m
+
+      # Install a newer CMake
+      DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+      CMAKE_DIR="${DEPS_DIR}/cmake"
+      mkdir -p ${DEPS_DIR}
+      CMAKE_URL="https://cmake.org/files/v3.9/cmake-3.9.2-Linux-x86_64.tar.gz"
+      mkdir $CMAKE_DIR && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C $CMAKE_DIR
+      export PATH=$CMAKE_DIR/bin:$PATH
+      cmake --version
     elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew install gcc ccache
       touch config.sh
@@ -47,6 +55,7 @@ before_install:
     fi
   - export CCACHE_COMPRESS=1
   - python --version # just to check
+  - cmake --version
 
 install:
   - pip install --upgrade pip setuptools wheel
