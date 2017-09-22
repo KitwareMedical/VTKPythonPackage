@@ -21,4 +21,7 @@ CMAKE_URL="https://cmake.org/files/v3.9/cmake-3.9.2-Linux-x86_64.tar.gz"
 mkdir $CMAKE_DIR && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C $CMAKE_DIR
 export PATH=$CMAKE_DIR/bin:$PATH
 
+# Copy the requirements
+cp /io/requirements-dev.txt .
+
 source scripts/build.sh
