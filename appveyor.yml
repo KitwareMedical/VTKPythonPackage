@@ -2,6 +2,9 @@
 # https://github.com/ogrisel/python-appveyor-demo/blob/master/appveyor.yml
 clone_depth: 50
 
+image:
+  - Visual Studio 2017
+
 # No reason for us to restrict the number concurrent jobs
 max_jobs: 100
 
