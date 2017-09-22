@@ -17,7 +17,5 @@ ln -s ccache /usr/local/bin/clang
 export USE_CCACHE=1
 export CCACHE_MAXSIZE=200M
 export CCACHE_CPP2=1
-export CFLAGS="-arch x86_64"
-export CXXFLAGS="-arch x86_64"
 
 source scripts/build.sh
