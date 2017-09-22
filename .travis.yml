@@ -1,6 +1,6 @@
 sudo: required
 
-language: python
+language: generic
 python:
   - 2.7
   - 3.6
