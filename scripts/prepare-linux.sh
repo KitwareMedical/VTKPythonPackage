@@ -10,14 +10,19 @@ ln -s /ccache $HOME/.ccache
 /opt/python/cp36-cp36m/bin/python -m venv venv
 source venv/bin/activate
 
-# Install ccache
-yum install -y ccache
+# Install yum packages
+yum install -y ccache libXt-devel
 
 # Install a newer CMake
+if [ $TARGET_ARCH == "x64" ]; then
+  CMAKE_URL="https://cmake.org/files/v3.5/cmake-3.5.2-Linux-x86_64.tar.gz"  
+else
+  CMAKE_URL="https://cmake.org/files/v3.5/cmake-3.5.2-Linux-i386.tar.gz"  
+fi
+
 DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
 CMAKE_DIR="${DEPS_DIR}/cmake"
 mkdir -p ${DEPS_DIR}
-CMAKE_URL="https://cmake.org/files/v3.5/cmake-3.5.2-Linux-x86_64.tar.gz"
 mkdir $CMAKE_DIR && wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C $CMAKE_DIR
 export PATH=$CMAKE_DIR/bin:$PATH
 
