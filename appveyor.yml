@@ -18,49 +18,21 @@ environment:
       APPVEYOR_SKIP_FINALIZE_ON_EXIT: true
 
   matrix:
-    - PYTHON: C:\Python36
-      PYTHON_VERSION: 3.6
-      PYTHON_ARCH: 32
-      TEST_MODE: fast
-
-    - PYTHON: C:\Python27-x64
-      PYTHON_VERSION: 2.7
-      PYTHON_ARCH: 64
-      TEST_MODE: fast
-
-    - PYTHON: C:\Python34-x64
-      PYTHON_VERSION: 3.4
-      PYTHON_ARCH: 64
-      TEST_MODE: fast
-
     - PYTHON: C:\Python36-x64
       PYTHON_VERSION: 3.6
       PYTHON_ARCH: 64
-      TEST_MODE: full
 
-    - PYTHON: C:\Python27
-      PYTHON_VERSION: 2.7
+    - PYTHON: C:\Python36
+      PYTHON_VERSION: 3.6
       PYTHON_ARCH: 32
-      SKIP_NOTAG: true
-      TEST_MODE: full
-
-    - PYTHON: C:\Python34
-      PYTHON_VERSION: 3.4
-      PYTHON_ARCH: 32
-      SKIP_NOTAG: true
-      TEST_MODE: full
 
     - PYTHON: C:\Python35-x64
       PYTHON_VERSION: 3.5
       PYTHON_ARCH: 64
-      SKIP_NOTAG: true
-      TEST_MODE: full
 
     - PYTHON: C:\Python35
       PYTHON_VERSION: 3.5
       PYTHON_ARCH: 32
-      SKIP_NOTAG: true
-      TEST_MODE: full
 
 init:
   - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
