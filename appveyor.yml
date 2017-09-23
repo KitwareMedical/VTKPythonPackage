@@ -79,17 +79,12 @@ install:
   # Install the scipy test dependencies.
   - 'pip install -U --timeout 5 --retries 2 -r requirements-dev.txt'
   - 'pip install git+https://github.com/frerich/clcache.git'
+  - 'pip install git+https://github.com/xoviat/command-timeout'
 
 build_script:
   - set CC=clcache
   - set CXX=clcache
-  - ps: | 
-      $code = {
-          python setup.py bdist_wheel
-      }
-      $j = Start-Job -Init ([ScriptBlock]::Create("Set-Location '$pwd'")) -ScriptBlock $code
-      if (Wait-Job $j -Timeout 120) { Receive-Job $j }
-      Remove-Job -force $j
+  - command-timeout 30 python setup.py bdist_wheel
 
 after_build:
   # Remove old or huge cache files to hopefully not exceed the 1GB cache limit.
