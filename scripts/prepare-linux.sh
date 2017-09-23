@@ -11,7 +11,7 @@ echo $PYBIN
 ln -s /ccache $HOME/.ccache
 
 # Activate the virtualenv
-if [ $TRAVIS_PYTHON_VERSION == '2.7' ]
+if [ $TRAVIS_PYTHON_VERSION == '2.7' ]; then
     /opt/python/${PYBIN}/bin/python -m pip install virtualenv
     /opt/python/${PYBIN}/bin/python -m virtualenv venv
 else
