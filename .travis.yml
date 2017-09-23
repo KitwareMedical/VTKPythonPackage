@@ -1,0 +1,79 @@
+sudo: required
+
+language: python
+os: linux
+
+python:
+  - 2.7
+  - 3.4
+  - 3.5
+  - 3.6
+
+env:
+  - TARGET_ARCH=x86
+  - TARGET_ARCH=x64
+
+# Ugh...osx must be explicitly included
+# because travis wants osx to be a pain
+# so that people won't use it (they're
+# short on capacity)
+matrix:
+  include:
+    - os: osx
+      python: 2.7
+      env:
+        - TARGET_ARCH=x86
+        - TRAVIS_PYTHON_VERSION=2.7
+      language: generic
+    - os: osx
+      python: 2.7
+      env:
+        - TARGET_ARCH=x64
+        - TRAVIS_PYTHON_VERSION=2.7
+      language: generic
+    - os: osx
+      python: 3.4
+      env:
+        - TARGET_ARCH=x86
+        - TRAVIS_PYTHON_VERSION=3.4
+      language: generic
+    - os: osx
+      python: 3.4
+      env:
+        - TARGET_ARCH=x64
+        - TRAVIS_PYTHON_VERSION=3.4
+      language: generic
+    - os: osx
+      python: 3.5
+      env:
+        - TARGET_ARCH=x86
+        - TRAVIS_PYTHON_VERSION=3.5
+      language: generic
+    - os: osx
+      python: 3.5
+      env:
+        - TARGET_ARCH=x64
+        - TRAVIS_PYTHON_VERSION=3.5
+      language: generic
+    - os: osx
+      python: 3.6
+      env:
+        - TARGET_ARCH=x86
+        - TRAVIS_PYTHON_VERSION=3.6
+      language: generic
+    - os: osx
+      python: 3.6
+      env:
+        - TARGET_ARCH=x64
+        - TRAVIS_PYTHON_VERSION=3.6
+      language: generic      
+
+cache:
+  directories:
+    - $HOME/.ccache
+
+install: true
+script: 
+  - chmod -R 777 scripts
+  - function timeout() { perl -e 'alarm shift; exec @ARGV' "$@"; }
+  - timeout 2400 /bin/bash scripts/start.sh
