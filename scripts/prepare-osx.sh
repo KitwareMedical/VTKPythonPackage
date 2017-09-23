@@ -1,11 +1,13 @@
 set -e -x
 
-brew install gcc ccache
+& brew install gcc ccache
 
 # Due to arrogance on the part of @yyuu, we need to use some bash here (pyenv/pyenv#602)
 SPECIFIC_VERSION="$(pyenv install -l | grep -e '${TRAVIS_PYTHON_VERSION}.[0-9]' | grep -v - | tail -1)"
 pyenv install $SPECIFIC_VERSION
 pyenv global $SPECIFIC_VERSION
+
+wait
 
 # Try to activate the virtualenv
 python -m venv venv || true
