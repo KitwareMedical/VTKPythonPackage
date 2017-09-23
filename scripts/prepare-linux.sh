@@ -11,7 +11,7 @@ echo $PYBIN
 ln -s /ccache $HOME/.ccache
 
 # Activate the virtualenv
-/opt/python/cp36-cp36m/bin/python -m venv venv
+/opt/python/${PYBIN}/bin/python -m venv venv
 source venv/bin/activate
 
 # Install yum packages
