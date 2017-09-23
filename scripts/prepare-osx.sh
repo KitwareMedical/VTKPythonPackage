@@ -6,18 +6,18 @@ CANDIDATE_VERSIONS="$(pyenv install -l | grep -Eio $ALLOWED_VERSIONS)"
 SELECTED_VERSION="$(echo ${CANDIDATE_VERSIONS} | tr " " "\n" | grep -v - | tail -1)"
 echo $SELECTED_VERSION
 
-pyenv install $SELECTED_VERSION
+if [ $TARGET_ARCH == "x86" ]; then
+  env PYTHON_CONFIGURE_OPTS="--enable-shared" CFLAGS="-m32" LDFLAGS="-m32" pyenv install $SELECTED_VERSION
+else
+  pyenv install $SELECTED_VERSION
+fi
 pyenv global $SELECTED_VERSION
 
 brew install gcc ccache
 
+export PATH=/usr/local/opt/ccache/libexec:$PATH
 which ccache
-ln -s ccache /usr/local/bin/gcc
-ln -s ccache /usr/local/bin/g
-ln -s ccache /usr/local/bin/cc
-ln -s ccache /usr/local/bin/c
-ln -s ccache /usr/local/bin/clang
-ln -s ccache /usr/local/bin/clang
+which gcc
 
 export USE_CCACHE=1
 export CCACHE_MAXSIZE=200M
