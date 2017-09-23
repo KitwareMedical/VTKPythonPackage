@@ -1,6 +1,6 @@
 set -e -x
 
-brew install gcc ccache pyenv
+brew install gcc ccache
 pyenv install $TRAVIS_PYTHON_VERSION
 pyenv global $TRAVIS_PYTHON_VERSION
 
