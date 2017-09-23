@@ -83,7 +83,13 @@ install:
 build_script:
   - set CC=clcache
   - set CXX=clcache
-  - C:\cygwin\bin\timeout 2400 python setup.py bdist_wheel
+  - ps: | 
+      $code = {
+          python setup.py bdist_wheel
+      }
+      $j = Start-Job -Init ([ScriptBlock]::Create("Set-Location '$pwd'")) -ScriptBlock $code
+      if (Wait-Job $j -Timeout 120) { Receive-Job $j }
+      Remove-Job -force $j
 
 after_build:
   # Remove old or huge cache files to hopefully not exceed the 1GB cache limit.
