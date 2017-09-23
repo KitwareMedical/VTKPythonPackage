@@ -11,7 +11,12 @@ echo $PYBIN
 ln -s /ccache $HOME/.ccache
 
 # Activate the virtualenv
-/opt/python/${PYBIN}/bin/python -m venv venv
+if [ $TRAVIS_PYTHON_VERSION == '2.7' ]
+    /opt/python/${PYBIN}/bin/python -m pip install virtualenv
+    /opt/python/${PYBIN}/bin/python -m virtualenv venv
+else
+    /opt/python/${PYBIN}/bin/python -m venv venv
+fi
 source venv/bin/activate
 
 # Install yum packages
