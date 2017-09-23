@@ -10,7 +10,7 @@ max_jobs: 100
 
 cache:
   - '%LOCALAPPDATA%\pip\Cache'
-  - '%HOME%\clcache'
+  - '%USERPROFILE%\clcache'
 
 environment:
   global:
