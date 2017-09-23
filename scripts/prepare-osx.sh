@@ -2,18 +2,14 @@ set -e -x
 
 # Due to arrogance on the part of @yyuu, we need to use some bash here (pyenv/pyenv#602)
 ALLOWED_VERSIONS="$TRAVIS_PYTHON_VERSION.[0-9]"
-CANDIDATE_VERSIONS="$(echo ${PYTHON_VERSIONS} | grep -Eio $ALLOWED_VERSIONS)"
+CANDIDATE_VERSIONS="$(pyenv install -l | grep -Eio $ALLOWED_VERSIONS)"
 SELECTED_VERSION="$(echo ${CANDIDATE_VERSIONS} | tr " " "\n" | grep -v - | tail -1)"
 echo $SELECTED_VERSION
 
-pyenv install $SPECIFIC_VERSION
-pyenv global $SPECIFIC_VERSION
+pyenv install $SELECTED_VERSION
+pyenv global $SELECTED_VERSION
 
 brew install gcc ccache
-
-# Try to activate the virtualenv
-python -m venv venv || true
-source venv/bin/activate || true
 
 which ccache
 ln -s ccache /usr/local/bin/gcc
