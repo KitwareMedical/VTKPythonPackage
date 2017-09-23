@@ -22,4 +22,8 @@ pip install -r requirements-dev.txt
 PYTHON_LIBRARY=$(cd $(dirname $0); pwd)/libpython-not-needed-symbols-exported-by-interpreter
 touch ${PYTHON_LIBRARY}
 
-python setup.py bdist_wheel -- -DPYTHON_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
+if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
+  python setup.py bdist_wheel
+else
+  python setup.py bdist_wheel -- -DPYTHON_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
+fi
