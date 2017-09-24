@@ -49,7 +49,6 @@ cache:
     - $HOME/.ccache
     - $HOME/.cache/pip
     - $HOME/Library/Caches/pip
-    - $HOME/Library/Caches/Homebrew
 
 install: true
 script: 
