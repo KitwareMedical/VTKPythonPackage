@@ -7,5 +7,6 @@ else
 fi
 
 docker pull $DOCKER_IMAGE
-docker run --rm -v ${HOME}/.ccache:/ccache -v `pwd`:/io -e TRAVIS_PYTHON_VERSION=$TRAVIS_PYTHON_VERSION \
+docker run --rm -v ${HOME}/.ccache:/ccache -v ${HOME}/.cache/pip:/pip-cache -v `pwd`:/io \
+   -e TRAVIS_PYTHON_VERSION=$TRAVIS_PYTHON_VERSION \
    -e TARGET_ARCH=$TARGET_ARCH $DOCKER_IMAGE /io/scripts/prepare-linux.sh
