@@ -1,11 +1,9 @@
 brew install gcc ccache
-if [ $TRAVIS_PYTHON_VERSION == '2.7' ]; then
-    brew install python
-else
+if [ $TRAVIS_PYTHON_VERSION != '2.7' ]; then
     brew tap zoidbergwill/python
     brew install python${PYTHON_TAG}
 
-    python${PYTHON_TAG} -m venv venv
+    python${TRAVIS_PYTHON_VERSION} -m venv venv
     source venv/bin/activate
 fi
 
