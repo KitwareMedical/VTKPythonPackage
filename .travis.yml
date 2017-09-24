@@ -47,6 +47,8 @@ matrix:
 cache:
   directories:
     - $HOME/.ccache
+    - $HOME/.cache/pip
+    - $HOME/Library/Caches/pip
 
 install: true
 script: 
