@@ -1,9 +1,13 @@
 brew install gcc ccache
-brew tap zoidbergwill/python
-brew install python${PYTHON_TAG}
+if [ $TRAVIS_PYTHON_VERSION == '2.7' ]; then
+    brew install python
+else
+    brew tap zoidbergwill/python
+    brew install python${PYTHON_TAG}
 
-python${PYTHON_TAG} -m venv venv
-source venv/bin/activate
+    python${PYTHON_TAG} -m venv venv
+    source venv/bin/activate
+fi
 
 export PATH=/usr/local/opt/ccache/libexec:$PATH
 which ccache
