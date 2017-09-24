@@ -1,16 +1,13 @@
 #!/bin/bash
 set -e -x
 
-PYBIN_TAG=${TRAVIS_PYTHON_VERSION//[^[:digit:]]/}
-PYBIN=cp${PYBIN_TAG}-cp${PYBIN_TAG}m
-
-echo $PYBIN_TAG
-echo $PYBIN
-
 # Link ccache and pip cache
 ln -s /ccache $HOME/.ccache
-mkdir -p $HOME/.cache
-ln -s /pip-cache $HOME/.cache/pip
+ln -s /cache $HOME/.cache
+
+PYBIN=cp${PYTHON_TAG}-cp${PYTHON_TAG}m
+echo $PYTHON_TAG
+echo $PYBIN
 
 # Activate the virtualenv
 if [ $TRAVIS_PYTHON_VERSION == '2.7' ]; then
