@@ -1,5 +1,8 @@
 set -e -x
 
+brew install gcc ccache
+brew upgrade pyenv
+
 # Due to arrogance on the part of @yyuu, we need to use some bash here (pyenv/pyenv#602)
 ALLOWED_VERSIONS="$TRAVIS_PYTHON_VERSION.[0-9]"
 CANDIDATE_VERSIONS="$(pyenv install -l | grep -Eio $ALLOWED_VERSIONS)"
@@ -8,8 +11,6 @@ echo $SELECTED_VERSION
 
 pyenv install $SELECTED_VERSION
 pyenv global $SELECTED_VERSION
-
-brew install gcc ccache
 
 export PATH=/usr/local/opt/ccache/libexec:$PATH
 which ccache
