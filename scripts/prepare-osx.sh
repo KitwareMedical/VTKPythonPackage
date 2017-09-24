@@ -1,16 +1,9 @@
-set -e -x
-
 brew install gcc ccache
-brew upgrade pyenv
+brew tap zoidbergwill/python
+brew install python${PYTHON_TAG}
 
-# Due to arrogance on the part of @yyuu, we need to use some bash here (pyenv/pyenv#602)
-ALLOWED_VERSIONS="$TRAVIS_PYTHON_VERSION.[0-9]"
-CANDIDATE_VERSIONS="$(pyenv install -l | grep -Eio $ALLOWED_VERSIONS)"
-SELECTED_VERSION="$(echo ${CANDIDATE_VERSIONS} | tr " " "\n" | grep -v - | tail -1)"
-echo $SELECTED_VERSION
-
-pyenv install $SELECTED_VERSION
-pyenv global $SELECTED_VERSION
+python${PYTHON_TAG} -m venv venv
+source venv/bin/activate
 
 export PATH=/usr/local/opt/ccache/libexec:$PATH
 which ccache
