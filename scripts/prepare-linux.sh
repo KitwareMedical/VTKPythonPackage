@@ -7,8 +7,10 @@ PYBIN=cp${PYBIN_TAG}-cp${PYBIN_TAG}m
 echo $PYBIN_TAG
 echo $PYBIN
 
-# Link ccache
+# Link ccache and pip cache
 ln -s /ccache $HOME/.ccache
+mkdir -p $HOME/.cache
+ln -s /pip-cache $HOME/.cache/pip
 
 # Activate the virtualenv
 if [ $TRAVIS_PYTHON_VERSION == '2.7' ]; then
