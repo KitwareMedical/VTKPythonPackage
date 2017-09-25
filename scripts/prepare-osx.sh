@@ -1,4 +1,4 @@
-brew install gcc ccache
+brew install ccache
 if [ $TRAVIS_PYTHON_VERSION != '2.7' ]; then
     brew tap zoidbergwill/python
     brew install python${PYTHON_TAG}
@@ -8,8 +8,10 @@ if [ $TRAVIS_PYTHON_VERSION != '2.7' ]; then
 fi
 
 export PATH=/usr/local/opt/ccache/libexec:$PATH
-which ccache
-which gcc
+which clang
+
+export CC=clang
+export CXX=clang++
 
 export USE_CCACHE=1
 export CCACHE_MAXSIZE=200M
