@@ -1,6 +1,8 @@
-
 from __future__ import print_function
-from os import sys, path
+
+import os
+import shlex
+import sys
 
 try:
     from skbuild import setup
@@ -11,7 +13,7 @@ except ImportError:
     print('  python -m pip install scikit-build')
     sys.exit(1)
 
-sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from vtkVersion import get_versions
 
 setup(
@@ -21,7 +23,7 @@ setup(
     author_email='vtk-developers@vtk.org',
     packages=['vtk'],
     package_dir={'vtk': 'vtk'},
-    cmake_args=[],
+    cmake_args=shlex.split(os.environ.get('VTK_CMAKE_ARGS', '')),
     py_modules=[
         'vtkVersion',
     ],

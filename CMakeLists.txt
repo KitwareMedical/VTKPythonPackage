@@ -56,6 +56,9 @@ if(VTKPythonPackage_SUPERBUILD)
   option(VTKPythonPackage_BUILD_PYTHON "Build VTK python module" ON)
   mark_as_advanced(VTKPythonPackage_BUILD_PYTHON)
 
+  option(VTK_Group_Web "Build VTK web module" OFF)
+  mark_as_advanced(VTK_Group_Web)
+
 
   #-----------------------------------------------------------------------------
   include(ExternalProject)
@@ -200,6 +203,9 @@ if(VTKPythonPackage_SUPERBUILD)
       # Rendering options
       -DVTK_Group_Qt:BOOL=OFF  # XXX Enabled this later
       -DVTK_RENDERING_BACKEND:STRING=OpenGL2
+
+      # Module options
+      -DVTK_Group_Web:BOOL=${VTK_Group_Web}
 
       ${ep_common_cmake_cache_args}
     USES_TERMINAL_DOWNLOAD 1
