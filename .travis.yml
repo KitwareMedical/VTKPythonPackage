@@ -19,7 +19,9 @@ env:
         # scikit-learn team, for # permission (and the API key) to upload to
         # the Rackspace account used here, or use your own account.
         - secure:
-            "MNKyBWOzu7JAUmC0Y+JhPKfytXxY/ADRmUIMEWZV977FLZPgYctqd+lqel2QIFgdHDO1CIdTSymOOFZckM9ICUXg9Ta+8oBjSvAVWO1ahDcToRM2DLq66fKg+NKimd2OfK7x597h/QmUSl4k8XyvyyXgl5jOiLg/EJxNE2r83IA="
+            "BqJ2EOgbwffzxJMvPDefgoAS5deIqnjugt4zeHiR4y1qaxQeqHc95QsZ5GsmxKgaZDy0TwqtDeyzipmnIUYGMBqc8Cd+SUtYouSLqkz00xgboYIUEqITVYy2AfeMGT9akn9KsNa4+MF7kHX5RE9tLHPadLk7jANoTEsJS8C6pGbz/qQUakX3tvkiO0DCxetzhRUJkaza5nA3MdtL9cK6UJNlMcw5MABmhBt+VJbEK5HwH5RW+5YW8136d517j2oGjCJ92asuOGzwPTa4Dhku5lghLgLHM/wjlhB/7YlsnKK8Aa3pBpwAfuGL325OnHZSozMvW44gmbVYPh2kv3hijdobayLUEwhmcS2cSl/vq0FSHZowpNvGaRgiJugq53Kr5LU/AJYcttl46Y5BHVwnmKDIGYyI8D4kNx3zkdG7uRqPJl8AA41OWhjInOG7kFsJOe4oMZJezCBQ6t33KdBTeJYYT19MMD76i1zybSuUkFnlJNVmbZzTLefb2gF33LU3C+gU9W+CMNt0UY3mJG88w+EB+/dXLxIxEQBcFyXv+Mu9DD/dbYdqOfkA1DYyY+fECFilWRPkxB2ONGgMFqnauPeWDJUCaJAtUm+kGpqh7AHAXRlHJj4posFZObqliw99U8nKZWj0bQ+XrVEVUbXlbKfGfsDqpA2izZdM4E8UmK4="
+        - secure:
+            "c14WGjxkDltLDc/SGBu6Ea8Mgj7Lw3iObJ0ffvOWgCwLoFaZ4JU8hETgwIqeUd8HvwznQrE4tBCdMlm0oo0dBMrqiLj9jz2RARRaoOwOvwdtQrxPAb8qYbefT8zovZ4Zxoog1PoAeREzdP2D4A7aOEJahAOjsg3Bk2jIg8FpgbPDZ+SSxk7uAYdBB9iTpXn5bjBwuYnmsI53RhRgBzKaFUyCsUEMHqNPl/daSROeSJ5+9pAOq54e8iwHHCzCSEm1J5Vq8s/bO35gqJr/fr7lfeyt4xHq8aNIZFtGPdV2uinAMVJt2AIv9utsgysvOLlh6hDvx3G6sg9Ahyez85LgUHmrM3J4X9uKOWHCNcQL3b4poA32UI3TeQnnZ4MlhLDc0/xTiVxgtF4HVbh5DwR7/tEEYIryK1JgzLU7yaYPtko+FEIiIBHJGgaZI0B2y6UcRN2c4JvSNZsd3ywagxhWHxaCjtwTMKIYrhJ/PWSgInMzgTRzIdD/bnEeJH+Xl2Z4VidpyRNvNOn1fFAIjNF0eIMFGezhGVjUsdoHxVCCGzgiesDpV+7MU3NlAVuPAxSwgA99ChEm+L8DGUGC1lfk2CcLpd1ozOA7gVCg1XaAIssNGlfgdd3L46X0Jm13sEsItofJYK9yrhpSHTW4qkZyTMlfTFetVJcUIgXin+aYI+g="
 
 language: python
 # The travis Python version is unrelated to the version we build and test
@@ -92,11 +94,8 @@ script:
 
 after_success:
     # Upload wheels to Rackspace container
-    - pip install wheelhouse-uploader
+    # - pip install wheelhouse-uploader
     # This uploads the wheels to a Rackspace container owned by the
     # scikit-learn team, available at http://wheels.scipy.org.  See above
     # for information on using this account or choosing another.
-    - python -m wheelhouse_uploader upload --local-folder
-        ${TRAVIS_BUILD_DIR}/wheelhouse/
-        --no-update-index
-        wheels
+    - twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD ${TRAVIS_BUILD_DIR}/wheelhouse/*
