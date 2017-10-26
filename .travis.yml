@@ -107,8 +107,7 @@ before_install:
 install:
     # Maybe get and clean and patch source
     # - clean_code $REPO_DIR $BUILD_COMMIT
-    - function timeout() { perl -e 'alarm shift; exec @ARGV' "$@"; }
-    - timeout 2400 build_wheel $REPO_DIR $PLAT
+    - build_wheel $REPO_DIR $PLAT
 
 script:
     - install_run $PLAT
