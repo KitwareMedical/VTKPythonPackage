@@ -8,5 +8,6 @@ function pre_build {
   else
       yum install -y libXt-devel
   fi
-  timeout 2400 python setup.py build
+  pip install command-timeout
+  command-timeout 2400 python setup.py build
 }
