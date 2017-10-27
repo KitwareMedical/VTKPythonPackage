@@ -38,7 +38,7 @@ install:
 
   # Install the dependencies
   - pip install git+https://github.com/frerich/clcache.git
-  - pip install cmake ninja command-timeout
+  - pip install cmake ninja command-timeout scikit-build
 
 build_script:
   - set CC=clcache
