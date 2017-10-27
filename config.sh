@@ -7,3 +7,8 @@ function pre_build {
   pip install command-timeout $BUILD_DEPENDS
   command-timeout 2400 python setup.py build 1>&2
 }
+
+function build_wheel {
+    # Set default building method to pip
+    build_bdist_wheel $@
+}
