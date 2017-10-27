@@ -8,12 +8,6 @@ image:
 # No reason for us to restrict the number concurrent jobs
 max_jobs: 100
 
-environment:
-  PYPI_USERNAME:
-    secure: rl2zkdPpMWKuqh3paOKNhA==
-  PYPI_PASSWORD:
-    secure: rToy5D17/4zLIaIBq9S4UQ==
-
 cache:
   - '%LOCALAPPDATA%\pip\Cache'
   - '%USERPROFILE%\clcache'
@@ -22,6 +16,10 @@ environment:
   global:
       APPVEYOR_SAVE_CACHE_ON_ERROR: true
       APPVEYOR_SKIP_FINALIZE_ON_EXIT: true
+      PYPI_USERNAME:
+        secure: rl2zkdPpMWKuqh3paOKNhA==
+      PYPI_PASSWORD:
+        secure: rToy5D17/4zLIaIBq9S4UQ==
 
   matrix:
     - PYTHON: C:\Python36-x64
