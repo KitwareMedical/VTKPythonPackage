@@ -50,7 +50,7 @@ build_script:
   - ps: |
       command-timeout 2400 python setup.py bdist_wheel
       if($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode )  }
-      clcache -M 644245094.4
+      clcache -M 644245094
       clcache -c
 
 after_build:
