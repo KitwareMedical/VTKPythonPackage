@@ -47,7 +47,11 @@ install:
 build_script:
   - set CC=clcache
   - set CXX=clcache
-  - command-timeout 2400 python setup.py bdist_wheel
+  - ps: |
+      command-timeout 2400 python setup.py bdist_wheel
+      if($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode )  }
+      clcache -M 536870912
+      clcache -c
 
 after_build:
   # Remove old or huge cache files to hopefully not exceed the 1GB cache limit.
