@@ -98,4 +98,4 @@ after_success:
     # This uploads the wheels to a Rackspace container owned by the
     # scikit-learn team, available at http://wheels.scipy.org.  See above
     # for information on using this account or choosing another.
-    - twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD ${TRAVIS_BUILD_DIR}/wheelhouse/*
+    - twine upload --skip-existing -u $PYPI_USERNAME -p $PYPI_PASSWORD ${TRAVIS_BUILD_DIR}/wheelhouse/*
