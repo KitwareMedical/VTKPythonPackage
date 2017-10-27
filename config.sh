@@ -1,7 +1,3 @@
-function timeout {
-  perl -e 'alarm shift; exec @ARGV' "$@"; 
-}
-
 function pre_build {
   if [ -n "$IS_OSX" ]; then
       :
