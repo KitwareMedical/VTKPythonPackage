@@ -62,11 +62,9 @@ after_build:
 on_finish:
   - clcache -M 536870912
   - clcache -c
-  - ps: |
-      If (Test-Path .\junit-results.xml) {
-        (new-object net.webclient).UploadFile(
-          "https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)",
-          (Resolve-Path .\junit-results.xml)
-        )
-      }
-      $LastExitCode = 0
+
+  - pip install twine
+  # This uploads the wheels to a Rackspace container owned by the
+  # scikit-learn team, available at http://wheels.scipy.org.  See above
+  # for information on using this account or choosing another.
+  - twine upload --skip-existing -u %PYPI_USERNAME% -p %PYPI_PASSWORD% dist/*
