@@ -86,7 +86,8 @@ install:
     - build_wheel $REPO_DIR $PLAT || true
 
 script:
-    - install_run $PLAT || true
+    - true
+    # - install_run $PLAT || true
 
 after_success:
     # Upload wheels to Rackspace container
