@@ -50,7 +50,7 @@ build_script:
   - ps: |
       command-timeout 2400 python setup.py bdist_wheel
       if($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode )  }
-      clcache -M 536870912
+      clcache -M 644245094.4
       clcache -c
 
 after_build:
@@ -68,9 +68,6 @@ after_build:
   - C:\cygwin\bin\du -hs "%LOCALAPPDATA%\pip\Cache"
 
 on_finish:
-  - clcache -M 536870912
-  - clcache -c
-
   - pip install twine
   # This uploads the wheels to a Rackspace container owned by the
   # scikit-learn team, available at http://wheels.scipy.org.  See above
