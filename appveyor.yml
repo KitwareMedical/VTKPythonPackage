@@ -8,6 +8,12 @@ image:
 # No reason for us to restrict the number concurrent jobs
 max_jobs: 100
 
+environment:
+  PYPI_USERNAME:
+    secure: rl2zkdPpMWKuqh3paOKNhA==
+  PYPI_PASSWORD:
+    secure: rToy5D17/4zLIaIBq9S4UQ==
+
 cache:
   - '%LOCALAPPDATA%\pip\Cache'
   - '%USERPROFILE%\clcache'
@@ -67,4 +73,4 @@ on_finish:
   # This uploads the wheels to a Rackspace container owned by the
   # scikit-learn team, available at http://wheels.scipy.org.  See above
   # for information on using this account or choosing another.
-  - twine upload --skip-existing -u %PYPI_USERNAME% -p %PYPI_PASSWORD% dist/*
+  - twine upload --skip-existing -u %PYPI_USERNAME% -p %PYPI_PASSWORD% dist/* 2> nul
