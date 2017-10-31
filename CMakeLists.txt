@@ -51,6 +51,8 @@ if(VTKPythonPackage_SUPERBUILD)
   # re-using existing resources.
   #
   #  VTK_SOURCE_DIR: Path to an existing source directory
+  #  VTK_Group_Web: Whether web package should be included
+  #  VTK_OPENGL_HAS_OSMESA: Whether to use OSMesa for offscreen rendering
   #
 
   option(VTKPythonPackage_BUILD_PYTHON "Build VTK python module" ON)
@@ -59,6 +61,13 @@ if(VTKPythonPackage_SUPERBUILD)
   option(VTK_Group_Web "Build VTK web module" OFF)
   mark_as_advanced(VTK_Group_Web)
 
+  option(VTK_OPENGL_HAS_OSMESA "Use OSMesa for offscreen rendering" OFF)
+  mark_as_advanced(VTK_OPENGL_HAS_OSMESA)
+  if(VTK_OPENGL_HAS_OSMESA)
+    set(NOT_VTK_OPENGL_HAS_OSMESA OFF)
+  else()
+    set(NOT_VTK_OPENGL_HAS_OSMESA ON)
+  endif()
 
   #-----------------------------------------------------------------------------
   include(ExternalProject)
@@ -203,6 +212,8 @@ if(VTKPythonPackage_SUPERBUILD)
       # Rendering options
       -DVTK_Group_Qt:BOOL=OFF  # XXX Enabled this later
       -DVTK_RENDERING_BACKEND:STRING=OpenGL2
+      -DVTK_OPENGL_HAS_OSMESA:BOOL=${VTK_OPENGL_HAS_OSMESA}
+      -DVTK_USE_X:BOOL=${NOT_VTK_OPENGL_HAS_OSMESA}
 
       # Module options
       -DVTK_Group_Web:BOOL=${VTK_Group_Web}
