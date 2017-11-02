@@ -27,9 +27,18 @@ setup(
     py_modules=[
         'vtkVersion',
     ],
-    download_url=r'http://www.vtk.org/download/',
-    description=r'VTK is an open-source toolkit for 3D computer graphics, image processing, and visualization',
-    long_description='VTK is an open-source, cross-platform library that provides developers with an extensive suite of software tools for 3D computer graphics, image processing, and visualization. It consists of a C++ class library and several interpreted interface layers including Tcl/Tk, Java, and Python. VTK supports a wide variety of visualization algorithms including scalar, vector, tensor, texture, and volumetric methods, as well as advanced modeling techniques such as implicit modeling, polygon reduction, mesh smoothing, cutting, contouring, and Delaunay triangulation. VTK has an extensive information visualization framework and a suite of 3D interaction widgets. The toolkit supports parallel processing and integrates with various databases on GUI toolkits such as Qt and Tk.',
+    download_url='http://www.vtk.org/download/',
+    description='VTK is an open-source toolkit for 3D computer graphics, image processing, and visualization',
+    long_description='VTK is an open-source, cross-platform library that provides developers with '
+                     'an extensive suite of software tools for 3D computer graphics, image processing,'
+                     'and visualization. It consists of a C++ class library and several interpreted interface '
+                     'layers including Tcl/Tk, Java, and Python. VTK supports a wide variety of visualization '
+                     'algorithms including scalar, vector, tensor, texture, and volumetric methods, as well as '
+                     'advanced modeling techniques such as implicit modeling, polygon reduction, mesh '
+                     'smoothing, cutting, contouring, and Delaunay triangulation. VTK has an extensive '
+                     'information visualization framework and a suite of 3D interaction widgets. The toolkit '
+                     'supports parallel processing and integrates with various databases on GUI toolkits such '
+                     'as Qt and Tk.',
     classifiers=[
         "License :: OSI Approved :: BSD License",
         "Programming Language :: Python",
