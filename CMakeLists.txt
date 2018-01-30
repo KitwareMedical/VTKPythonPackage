@@ -69,7 +69,7 @@ if(VTKPythonPackage_SUPERBUILD)
     set(NOT_VTK_OPENGL_HAS_OSMESA ON)
   endif()
 
-  if(APPLE)
+  if(APPLE OR WIN32)
     set(VTK_BUILD_WITH_X OFF)
   else()
     set(VTK_BUILD_WITH_X ${NOT_VTK_OPENGL_HAS_OSMESA})
