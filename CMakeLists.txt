@@ -69,12 +69,18 @@ if(VTKPythonPackage_SUPERBUILD)
     set(NOT_VTK_OPENGL_HAS_OSMESA ON)
   endif()
 
+  if(APPLE OR WIN32)
+    set(VTK_BUILD_WITH_X OFF)
+  else()
+    set(VTK_BUILD_WITH_X ${NOT_VTK_OPENGL_HAS_OSMESA})
+  endif()
+
   #-----------------------------------------------------------------------------
   include(ExternalProject)
 
   set(VTK_REPOSITORY "https://github.com/kitware/VTK.git")
   # VTK nightly-master 2017-07-17
-  set(VTK_GIT_TAG "8a60be1")
+  set(VTK_GIT_TAG "v8.1.0")
 
   #-----------------------------------------------------------------------------
   # A separate project is used to download VTK, so that it can reused
@@ -176,6 +182,11 @@ if(VTKPythonPackage_SUPERBUILD)
     list(APPEND ep_common_cmake_cache_args
       -DCMAKE_INSTALL_RPATH:STRING=$ORIGIN
       )
+  elseif(APPLE)
+    list(APPEND ep_common_cmake_cache_args
+      -DCMAKE_INSTALL_NAME_DIR:STRING=@loader_path
+      -DCMAKE_INSTALL_RPATH:STRING=@loader_path
+      )
   endif()
 
   ExternalProject_add(VTK
@@ -213,7 +224,7 @@ if(VTKPythonPackage_SUPERBUILD)
       -DVTK_Group_Qt:BOOL=OFF  # XXX Enabled this later
       -DVTK_RENDERING_BACKEND:STRING=OpenGL2
       -DVTK_OPENGL_HAS_OSMESA:BOOL=${VTK_OPENGL_HAS_OSMESA}
-      -DVTK_USE_X:BOOL=${NOT_VTK_OPENGL_HAS_OSMESA}
+      -DVTK_USE_X:BOOL=${VTK_BUILD_WITH_X}
 
       # Module options
       -DVTK_Group_Web:BOOL=${VTK_Group_Web}
