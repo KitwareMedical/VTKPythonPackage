@@ -63,7 +63,7 @@ if(VTKPythonPackage_SUPERBUILD)
 
   option(VTK_OPENGL_HAS_OSMESA "Use OSMesa for offscreen rendering" OFF)
   mark_as_advanced(VTK_OPENGL_HAS_OSMESA)
-  if(VTK_OPENGL_HAS_OSMESA)
+  if(VTK_OPENGL_HAS_OSMESA OR APPLE OR WIN32)
     set(VTK_USE_X OFF)
   else()
     set(VTK_USE_X ON)
