@@ -176,6 +176,11 @@ if(VTKPythonPackage_SUPERBUILD)
     list(APPEND ep_common_cmake_cache_args
       -DCMAKE_INSTALL_RPATH:STRING=$ORIGIN
       )
+  elseif(APPLE)
+    list(APPEND ep_common_cmake_cache_args
+      -DCMAKE_INSTALL_NAME_DIR:STRING=@loader_path
+      -DCMAKE_INSTALL_RPATH:STRING=@loader_path
+      )
   endif()
 
   ExternalProject_add(VTK
