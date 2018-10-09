@@ -40,6 +40,11 @@ if(VTKPythonPackage_SUPERBUILD)
       -DCMAKE_MAKE_PROGRAM:FILEPATH=${CMAKE_MAKE_PROGRAM})
   endif()
 
+  if(OpenGL_GL_PREFERENCE)
+    list(APPEND ep_common_cmake_cache_args
+      -DOpenGL_GL_PREFERENCE:STRING=${OpenGL_GL_PREFERENCE})
+  endif()
+
   # Avoid "Manually-specified variables were not used by the project" warnings.
   vpp_unused_vars(${PYTHON_VERSION_STRING} ${SKBUILD})
 
@@ -60,6 +65,9 @@ if(VTKPythonPackage_SUPERBUILD)
 
   option(VTK_Group_Web "Build VTK web module" OFF)
   mark_as_advanced(VTK_Group_Web)
+
+  option(VTK_OPENGL_HAS_EGL "Use EGL for offscreen rendering" OFF)
+  mark_as_advanced(VTK_OPENGL_HAS_EGL)
 
   option(VTK_OPENGL_HAS_OSMESA "Use OSMesa for offscreen rendering" OFF)
   mark_as_advanced(VTK_OPENGL_HAS_OSMESA)
@@ -218,6 +226,7 @@ if(VTKPythonPackage_SUPERBUILD)
       -DVTK_Group_Qt:BOOL=OFF  # XXX Enabled this later
       -DVTK_RENDERING_BACKEND:STRING=OpenGL2
       -DVTK_OPENGL_HAS_OSMESA:BOOL=${VTK_OPENGL_HAS_OSMESA}
+      -DVTK_OPENGL_HAS_EGL:BOOL=${VTK_OPENGL_HAS_EGL}
       -DVTK_USE_X:BOOL=${VTK_USE_X}
 
       # Module options
