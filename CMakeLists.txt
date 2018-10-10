@@ -67,8 +67,16 @@ if(VTKPythonPackage_SUPERBUILD)
   # This is a Linux only option and the valid values can be either
   # "LEGACY" or "GLVND". More information here:
   # https://cmake.org/cmake/help/git-stage/policy/CMP0072.html
-  option(OpenGL_GL_PREFERENCE "Set the preferred OpenGL library" "LEGACY")
-  mark_as_advanced(OpenGL_GL_PREFERENCE)
+  if(UNIX AND NOT APPLE)
+    set(OpenGL_GL_PREFERENCE "LEGACY" CACHE STRING "Set the preferred OpenGL library")
+
+    if(NOT OpenGL_GL_PREFERENCE MATCHES "^(LEGACY|GLVND)$")
+      message(FATAL_ERROR "Unknown value for OpenGL_GL_PREFERENCE. Valid values are LEGACY or GLVND")
+    endif()
+
+    # Set the possible values of build type for cmake-gui
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "LEGACY" "GLVND")
+  endif()
 
   option(VTK_OPENGL_HAS_OSMESA "Use OSMesa for offscreen rendering" OFF)
   mark_as_advanced(VTK_OPENGL_HAS_OSMESA)
@@ -78,7 +86,8 @@ if(VTKPythonPackage_SUPERBUILD)
     set(VTK_USE_X ON)
   endif()
 
-  if(UNIX AND OpenGL_GL_PREFERENCE)
+
+  if(UNIX AND NOT APPLE)
     list(APPEND ep_common_cmake_cache_args
       -DOpenGL_GL_PREFERENCE:STRING=${OpenGL_GL_PREFERENCE})
   endif()
@@ -89,7 +98,7 @@ if(VTKPythonPackage_SUPERBUILD)
 
   set(VTK_REPOSITORY "https://github.com/kitware/VTK.git")
   # VTK nightly-master 2017-12-13
-  set(VTK_GIT_TAG "ab71574")
+  set(VTK_GIT_TAG "v8.1.1")
 
   #-----------------------------------------------------------------------------
   # A separate project is used to download VTK, so that it can reused
