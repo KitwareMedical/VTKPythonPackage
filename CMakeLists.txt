@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.10)
 
 project(VTKPythonPackage NONE)
 
@@ -61,6 +61,23 @@ if(VTKPythonPackage_SUPERBUILD)
   option(VTK_Group_Web "Build VTK web module" OFF)
   mark_as_advanced(VTK_Group_Web)
 
+  option(VTK_OPENGL_HAS_EGL "Use EGL for offscreen rendering" OFF)
+  mark_as_advanced(VTK_OPENGL_HAS_EGL)
+
+  # This is a Linux only option and the valid values can be either
+  # "LEGACY" or "GLVND". More information here:
+  # https://cmake.org/cmake/help/git-stage/policy/CMP0072.html
+  if(UNIX AND NOT APPLE)
+    set(OpenGL_GL_PREFERENCE "LEGACY" CACHE STRING "Set the preferred OpenGL library")
+
+    if(NOT OpenGL_GL_PREFERENCE MATCHES "^(LEGACY|GLVND)$")
+      message(FATAL_ERROR "Unknown value for OpenGL_GL_PREFERENCE. Valid values are LEGACY or GLVND")
+    endif()
+
+    # Set the possible values of build type for cmake-gui
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "LEGACY" "GLVND")
+  endif()
+
   option(VTK_OPENGL_HAS_OSMESA "Use OSMesa for offscreen rendering" OFF)
   mark_as_advanced(VTK_OPENGL_HAS_OSMESA)
   if(VTK_OPENGL_HAS_OSMESA OR APPLE OR WIN32)
@@ -68,6 +85,13 @@ if(VTKPythonPackage_SUPERBUILD)
   else()
     set(VTK_USE_X ON)
   endif()
+
+
+  if(UNIX AND NOT APPLE)
+    list(APPEND ep_common_cmake_cache_args
+      -DOpenGL_GL_PREFERENCE:STRING=${OpenGL_GL_PREFERENCE})
+  endif()
+
 
   #-----------------------------------------------------------------------------
   include(ExternalProject)
@@ -218,6 +242,7 @@ if(VTKPythonPackage_SUPERBUILD)
       -DVTK_Group_Qt:BOOL=OFF  # XXX Enabled this later
       -DVTK_RENDERING_BACKEND:STRING=OpenGL2
       -DVTK_OPENGL_HAS_OSMESA:BOOL=${VTK_OPENGL_HAS_OSMESA}
+      -DVTK_OPENGL_HAS_EGL:BOOL=${VTK_OPENGL_HAS_EGL}
       -DVTK_USE_X:BOOL=${VTK_USE_X}
 
       # Module options
