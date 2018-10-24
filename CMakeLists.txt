@@ -75,7 +75,7 @@ if(VTKPythonPackage_SUPERBUILD)
     endif()
 
     # Set the possible values of build type for cmake-gui
-    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "LEGACY" "GLVND")
+    set_property(CACHE OpenGL_GL_PREFERENCE PROPERTY STRINGS "LEGACY" "GLVND")
   endif()
 
   option(VTK_OPENGL_HAS_OSMESA "Use OSMesa for offscreen rendering" OFF)
