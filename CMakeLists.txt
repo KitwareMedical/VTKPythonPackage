@@ -98,7 +98,7 @@ if(VTKPythonPackage_SUPERBUILD)
 
   set(VTK_REPOSITORY "https://github.com/kitware/VTK.git")
   # VTK nightly-master 2018-05-14
-  set(VTK_GIT_TAG "v8.1.1")
+  set(VTK_GIT_TAG "v8.1.2")
 
   #-----------------------------------------------------------------------------
   # A separate project is used to download VTK, so that it can reused
