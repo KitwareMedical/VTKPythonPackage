@@ -3,6 +3,7 @@ import os
 import shutil
 from subprocess import check_call
 import sys
+from distutils import sysconfig
 
 SCRIPT_DIR = os.path.abspath(os.path.dirname(__file__))
 ROOT_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
@@ -41,8 +42,7 @@ def get_python_info():
     version = sys.version_info[:2]
     py_ver = '{0}.{1}'.format(*version)
     prefix = os.path.abspath(sys.prefix)
-    py_inc_dir = glob.glob(os.path.join(prefix, 'include', 'python*'))[0]
-    py_lib_dir = os.path.join(prefix, 'lib')
+    py_inc_dir = sysconfig.get_python_inc()
     py_lib = get_dummy_python_lib()
     return py_exe, py_ver, py_inc_dir, py_lib
 
