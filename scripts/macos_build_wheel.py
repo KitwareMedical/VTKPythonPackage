@@ -50,8 +50,6 @@ def get_python_info():
 def build_wheel(cleanup=False):
     py_exe, py_ver, py_inc_dir, py_lib = get_python_info()
     build_type = 'Release'
-    source_path = "%s/%s-source" % (STANDALONE_DIR, PROJECT_NAME)
-    build_path = "%s/%s-osx_%s" % (ROOT_DIR, PROJECT_NAME, py_ver)
     osx_target="10.9"
 
     # Clean up previous invocations
@@ -69,8 +67,6 @@ def build_wheel(cleanup=False):
         "--build-type", build_type,
         "-G", "Ninja",
         "--",
-        "-DVTK_SOURCE_DIR:PATH=%s" % source_path,
-        "-DVTK_BINARY_DIR:PATH=%s" % build_path,
         "-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=%s" % osx_target,
         "-DPYTHON_EXECUTABLE:FILEPATH=%s" % py_exe,
         "-DPYTHON_INCLUDE_DIR:PATH=%s" % py_inc_dir,
