@@ -66,8 +66,8 @@ def build_wheel(cleanup=False):
         "setup.py", "bdist_wheel",
         "--build-type", build_type,
         "-G", "Ninja",
+        "--plat-name", "macosx-" + osx_target + "-x86_64",
         "--",
-        "-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=%s" % osx_target,
         "-DPYTHON_EXECUTABLE:FILEPATH=%s" % py_exe,
         "-DPYTHON_INCLUDE_DIR:PATH=%s" % py_inc_dir,
         "-DPYTHON_LIBRARY:FILEPATH=%s" % py_lib
