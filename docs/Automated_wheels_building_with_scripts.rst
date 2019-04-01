@@ -11,7 +11,7 @@ On any linux distribution with docker and bash installed, running the script doc
 
 For example::
 
-	$ git clone https://github.com/jcfr/VTKPythonPackage.git
+	$ git clone https://github.com/KitwareMedical/VTKPythonPackage.git
 	[...]
 
 	$ ./scripts/dockcross-manylinux-build-wheels.sh
@@ -27,7 +27,19 @@ For example::
 MacOSX
 ------
 
-.. note:: *Not yet available.*
+Download and install python from https://www.python.org/downloads/mac-osx/.
+Run macos_build_wheels.py to create wheels for python 3.5, 3.6 and 3.7 in the dist directory.
+
+For example::
+
+	$ git clone https://github.com/KitwareMedical/VTKPythonPackage.git
+
+	$ python ./scripts/macos_build_wheels.py.
+
+	$ ls -1 dist/
+	vtk-8.0.0.dev20170714-cp34-cp34m-macosx_10_9_x86_64.whl
+	vtk-8.0.0.dev20170714-cp35-cp35m-macosx_10_9_x86_64.whl
+	vtk-8.0.0.dev20170714-cp36-cp36m-macosx_10_9_x86_64.whl
 
 Windows
 -------
@@ -42,7 +54,7 @@ Open a PowerShell terminal as Administrator, and install Python::
 In a PowerShell prompt::
 
 	PS C:\Windows> cd C:\
-	PS C:\> git clone https://github.com/jcfr/VTKPythonPackage.git VPP
+	PS C:\> git clone https://github.com/KitwareMedical/VTKPythonPackage.git VPP
 	PS C:\> cd VPP
 	PS C:\VPP> C:\Python27-x64\python.exe .\scripts\windows_build_wheels.py
 	[...]
