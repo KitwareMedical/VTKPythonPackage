@@ -1,6 +1,7 @@
 __all__ = ['DEFAULT_PY_ENVS', 'venv_paths']
 
 from subprocess import check_call
+from distutils import sysconfig
 import os
 
 DEFAULT_PY_ENVS = ["3.5", "3.6", "3.7"]
@@ -40,7 +41,7 @@ def venv_paths(python_version):
     check_call([venv_executable, venv_dir])
 
     python_executable = os.path.join(venv_dir, "bin", "python")
-    python_include_dir = "/Library/Frameworks/Python.framework/Versions/%s/include/python%sm" % (python_version, python_version)
+    python_include_dir = sysconfig.get_python_inc()
 
     python_library = get_dummy_python_lib()
 
