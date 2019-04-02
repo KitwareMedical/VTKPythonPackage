@@ -54,7 +54,6 @@ def build_wheel(python_version, cleanup=False):
                     "-r", os.path.join(ROOT_DIR, "requirements-dev.txt")])
 
         build_type = 'Release'
-        source_path = "%s/%s-source" % (STANDALONE_DIR, PROJECT_NAME)
         build_path = "%s/%s-osx_%s" % (ROOT_DIR, PROJECT_NAME, python_version)
         osx_target="10.9"
 
@@ -72,10 +71,8 @@ def build_wheel(python_version, cleanup=False):
             "setup.py", "bdist_wheel",
             "--build-type", build_type,
             "-G", "Ninja",
+            "--plat-name", "macosx-%s-x86_64" % osx_target,
             "--",
-            "-DVTK_SOURCE_DIR:PATH=%s" % source_path,
-            "-DVTK_BINARY_DIR:PATH=%s" % build_path,
-            "-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=%s" % osx_target,
             "-DPYTHON_EXECUTABLE:FILEPATH=%s" % py_exe,
             "-DPYTHON_INCLUDE_DIR:PATH=%s" % py_inc_dir,
             "-DPYTHON_LIBRARY:FILEPATH=%s" % py_lib
