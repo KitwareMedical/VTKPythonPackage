@@ -1,8 +1,0 @@
-include CMakeLists.txt
-include cmake/*.cmake
-include README.md
-include vtkVersion.py
-include scripts/dockcross-manylinux-build-wheels.sh
-recursive-include scripts/internal *
-include setup.py
-include vtk/__init__.py
