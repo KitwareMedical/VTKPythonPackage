@@ -1,9 +1,16 @@
 #!/bin/bash
+
+# DEBUG
+echo USING_DOCKER $USING_DOCKER
+echo PYTHON $PYTHON
+
+# Clone the VTK repo and checkout desired release
 git clone https://gitlab.kitware.com/vtk/vtk.git
 cd vtk
 git checkout tags/v9.1.0 -b v9.1.0
 cd ..
 
+# Make a directory for the build
 mkdir vtk_build
 cd vtk_build
 
@@ -48,4 +55,14 @@ ninja
 #    ../vtk
 #make
 
-python setup.py bdist_wheel
+# If running in a Docker container use Python specifed by $PYTHON variable
+if [ $USING_DOCKER -eq 1 ]
+    then
+    $PYTHON setup.py bdist_wheel
+else
+    python setup.py bdist_wheel
+fi
+
+# Use auditwheel to produce manylinux wheel
+auditwheel repair dist/*.whl
+
