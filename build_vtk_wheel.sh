@@ -7,7 +7,7 @@ echo PYTHON $PYTHON
 # Clone the VTK repo and checkout desired release
 git clone https://gitlab.kitware.com/vtk/vtk.git
 cd vtk
-git checkout tags/v9.1.0 -b v9.1.0
+git checkout -b v9.2.0.rc1 tags/v9.2.0.rc1
 cd ..
 
 # Make a directory for the build

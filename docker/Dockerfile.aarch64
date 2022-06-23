@@ -4,5 +4,5 @@ RUN yum makecache && \
 WORKDIR /root
 RUN git clone https://github.com/firedrakeproject/VTKPythonPackage.git
 ENV USING_DOCKER 1
-ENV PYTHON /opt/python/cp310-cp310/bin/python3
+ENV PYTHON /opt/python/cp311-cp311/bin/python3
 RUN VTKPythonPackage/build_vtk_wheel.sh
