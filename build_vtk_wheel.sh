@@ -64,5 +64,7 @@ else
 fi
 
 # Use auditwheel to produce manylinux wheel
+# For some reason auditwheel can't find libvtksys-9.2.so
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/vtk_build/build/lib.linux-x86_64-3.11/vtkmodules
 auditwheel repair dist/*.whl
 
